@@ -9,11 +9,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xl: "1160px",
+        sm: "767px",
+      },
       colors: {
         primary: "rgba(var(--text-primary))",
         secondary: "rgba(var(--text-secondary))",
         default: "rgba(var(--text-default))",
         hover: "rgba(var(--button-hover))",
+      },
+      backgroundColor: {
+        primary: "rgba(var(--primary-bg))",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],

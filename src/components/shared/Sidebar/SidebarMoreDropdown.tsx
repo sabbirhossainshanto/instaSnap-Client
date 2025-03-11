@@ -7,12 +7,18 @@ import {
   DropdownSection,
 } from "@heroui/react";
 import Link from "next/link";
-import { Activity, More, Report, Saved, Settings } from "../Icon";
+import { Activity, More, Report, Saved, Settings, ThemeIcon } from "../Icon";
 import { ThemeSwitch } from "../../theme-switch";
-import { useTheme } from "next-themes";
+import { logOut } from "@/src/services/auth";
+import { useRouter } from "next/navigation";
 
 export default function SidebarMoreDropdown() {
-  const { theme } = useTheme();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logOut();
+    router.push("/login");
+  };
   return (
     <Dropdown
       closeOnSelect={false}
@@ -29,7 +35,7 @@ export default function SidebarMoreDropdown() {
           href="/"
         >
           <More />
-          <span>More</span>
+          <span className="hidden xl:block">More</span>
         </Link>
       </DropdownTrigger>
       <DropdownMenu variant="light" aria-label="Dropdown menu with description">
@@ -55,9 +61,10 @@ export default function SidebarMoreDropdown() {
             className="mt-3"
             closeOnSelect={false}
             key="dark mode"
-            startContent={<ThemeSwitch />}
+            endContent={<ThemeSwitch />}
+            startContent={<ThemeIcon />}
           >
-            {theme === "dark" ? "Light Mode" : "Dark Mode"}
+            Dark Mode
           </DropdownItem>
 
           <DropdownItem className="mt-3" key="Report" startContent={<Report />}>
@@ -69,7 +76,9 @@ export default function SidebarMoreDropdown() {
           <DropdownItem key="switch account">Switch accounts</DropdownItem>
         </DropdownSection>
 
-        <DropdownItem key="logout">Logout</DropdownItem>
+        <DropdownItem onPress={handleLogout} key="logout">
+          Logout
+        </DropdownItem>
       </DropdownMenu>
     </Dropdown>
   );

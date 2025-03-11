@@ -1,54 +1,48 @@
 "use client";
 
 import { Logo } from "@/src/components/shared/Icon";
-import { Button } from "@heroui/button";
-import { addToast, Divider } from "@heroui/react";
-import { useTheme } from "next-themes";
 import { SubmitHandler } from "react-hook-form";
-import { GenericForm } from "@/src/components/ISForm/GenericForm";
-import TextField from "@/src/components/ISForm/fields/TextField";
+import { GenericForm } from "@/src/lib/ISForm/GenericForm";
+import TextField from "@/src/lib/ISForm/fields/TextField";
 import { TRegister, TRegisterData, TResponse } from "@/src/types";
 import { useUserRegister } from "@/src/hooks/login";
 import Link from "next/link";
 import { RegisterSchema } from "@/src/schemas";
+import { useRouter } from "next/navigation";
+import { notification } from "@/src/utils/notification";
+import ISButton from "@/src/lib/ISButton/ISButton";
+import ISDivider from "@/src/lib/ISDivider/ISDivider";
 
 const Register = () => {
-  const { theme } = useTheme();
   const { mutate: handleRegister } = useUserRegister();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<TRegister> = (data) => {
     handleRegister(data, {
       onSuccess: (data: TResponse<TRegisterData>) => {
         if (data?.success) {
-          addToast({
-            description: data?.message,
-            color: "success",
-          });
+          notification({ message: data?.message });
+          router.push("/");
         } else {
-          addToast({
-            description: data?.message,
-            color: "warning",
-          });
+          notification({ message: data?.message, color: "warning" });
         }
       },
     });
   };
   return (
-    <div
-      className={`w-full  flex flex-col items-center justify-center ${theme === "light" ? "light-bg" : "dark-bg"}`}
-    >
+    <div className={`w-full  flex flex-col items-center justify-center `}>
       <div className="w-[350px]  border-secondary/25 border-[0.5px] flex flex-col items-center p-10 space-y-3 mt-5">
         <Logo />
         <p className="max-w-[30ch] text-center text-secondary  text-base">
           Sign up to see photos and videos from your friends.
         </p>
-        <Button radius="sm" className="w-full">
+        <ISButton radius="sm" className="w-full">
           Login With Facebook
-        </Button>
+        </ISButton>
         <div className="flex items-center justify-center gap-3 w-full text-secondary text-xs">
-          <Divider className="flex-1" />
+          <ISDivider className="flex-1" />
           <div>OR</div>
-          <Divider className="flex-1" />
+          <ISDivider className="flex-1" />
         </div>
         <GenericForm onSubmit={onSubmit} schema={RegisterSchema}>
           <div className="space-y-10 w-full">
@@ -77,9 +71,9 @@ const Register = () => {
               name="userName"
               label="User Name"
             />
-            <Button className="w-full" radius="sm" type="submit">
+            <ISButton className="w-full" type="submit">
               Sign up
-            </Button>
+            </ISButton>
           </div>
         </GenericForm>
       </div>

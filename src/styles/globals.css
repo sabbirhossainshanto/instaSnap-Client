@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.light-bg {
+.light {
   --primary-bg: 255, 255, 255;
   --text-primary: 0, 0, 0;
   --text-secondary: 115, 115, 115;
@@ -10,10 +10,29 @@
   --button-hover: 0, 0, 0, 0.05;
 }
 
-.dark-bg {
+.dark {
   --primary-bg: 0, 0, 0;
   --text-primary: 245, 245, 245;
   --text-secondary: 168, 168, 168;
   --text-default: 0, 149, 246;
   --button-hover: 255, 255, 255, 0.1;
+}
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 10px !important;
+  color: rgb(71, 71, 71) !important;
+  font-weight: bolder !important;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  height: 23px !important;
+  width: 23px !important;
+  background-color: white !important;
+  border-radius: 100% !important;
+}
+
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  display: none !important;
 }

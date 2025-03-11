@@ -1,43 +1,37 @@
 "use client";
 
 import { Logo } from "@/src/components/shared/Icon";
-import { Button } from "@heroui/button";
-import { addToast, Divider } from "@heroui/react";
-import { useTheme } from "next-themes";
 import { SubmitHandler } from "react-hook-form";
-import { GenericForm } from "@/src/components/ISForm/GenericForm";
-import TextField from "@/src/components/ISForm/fields/TextField";
+import { GenericForm } from "@/src/lib/ISForm/GenericForm";
+import TextField from "@/src/lib/ISForm/fields/TextField";
 import { LoginSchema } from "@/src/schemas";
 import { TRegister, TResponse } from "@/src/types";
 import { useUserLogin } from "@/src/hooks/login";
 import Link from "next/link";
 import { TLoginPayload, TLoginResponse } from "@/src/types/login.type";
+import { useRouter } from "next/navigation";
+import { notification } from "@/src/utils/notification";
+import ISButton from "@/src/lib/ISButton/ISButton";
+import ISDivider from "@/src/lib/ISDivider/ISDivider";
 
 const Login = () => {
-  const { theme } = useTheme();
-  const { mutate: handleLogin } = useUserLogin();
+  const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<TLoginPayload> = (data) => {
     handleLogin(data, {
       onSuccess: (data: TResponse<TLoginResponse>) => {
         if (data?.success) {
-          addToast({
-            description: data?.message,
-            color: "success",
-          });
+          notification({ message: data?.message });
+          router.push("/");
         } else {
-          addToast({
-            description: data?.message,
-            color: "warning",
-          });
+          notification({ message: data?.message, color: "warning" });
         }
       },
     });
   };
   return (
-    <div
-      className={`w-full  flex flex-col items-center justify-center ${theme === "light" ? "light-bg" : "dark-bg"}`}
-    >
+    <div className={`w-full  flex flex-col items-center justify-center`}>
       <div className="w-[350px]  border-secondary/25 border-[0.5px] flex flex-col items-center p-10 space-y-3 mt-5">
         <Logo />
 
@@ -59,15 +53,19 @@ const Login = () => {
               label="Password"
             />
 
-            <Button className="w-full" radius="sm" type="submit">
+            <ISButton
+              isLoading={isPending || isSuccess}
+              className="w-full"
+              type="submit"
+            >
               Log in
-            </Button>
+            </ISButton>
           </div>
         </GenericForm>
         <div className="flex items-center justify-center gap-3 w-full text-secondary text-xs">
-          <Divider className="flex-1" />
+          <ISDivider className="flex-1" />
           <div>OR</div>
-          <Divider className="flex-1" />
+          <ISDivider className="flex-1" />
         </div>
         <button className="text-default">Login with facebook</button>
         <button>Forgot Password?</button>

@@ -1,54 +1,32 @@
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
-// import { getCurrentUser } from "./services/AuthService";
+import type { NextRequest } from "next/server";
 
-const roleBasedRoutes = {
-  USER: [/^\//],
-  ADMIN: [/^\/admin/],
-};
-type TRole = keyof typeof roleBasedRoutes;
-
-async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow unauthenticated access to public routes like login or register
+  // Define public routes that don't require authentication
   const publicRoutes = ["/login", "/register"];
+
+  // Allow public routes without authentication
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  // Check if the user is logged in
-  const user: any = null;
+  // Get authentication token from cookies
+  const token = request.cookies.get("accessToken")?.value;
 
-  // Redirect to login if the user is not logged in
-  if (!user) {
+  // Redirect to login if no token is found (user is not authenticated)
+  if (!token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Allow logged-in users to access all unrestricted routes
-  const restrictedRoutes = roleBasedRoutes[user.role as TRole] || [];
-
-  // If the current route matches a restricted route for this role, allow access
-  if (restrictedRoutes.some((route) => pathname.match(route))) {
-    return NextResponse.next();
-  }
-
-  // If the route is restricted and doesn't match the user's role, deny access
-  if (
-    Object.values(roleBasedRoutes).some((routes) =>
-      routes.some((route) => pathname.match(route))
-    )
-  ) {
-    return NextResponse.redirect(new URL("/", request.url));
-  }
-
-  // Allow logged-in users to access other routes (e.g., /, /blog)
+  // If the user is authenticated, allow access to all pages
   return NextResponse.next();
 }
 
-// Configure the paths that the middleware should match
+// Apply the middleware to all routes except static files (_next, api, etc.)
 export const config = {
-  matcher: ["/admin", "/login", "/register", "/:path"],
+  matcher: ["/((?!_next|api/.*|favicon.ico).*)"],
 };
 
 export default middleware;
