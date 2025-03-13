@@ -21,6 +21,8 @@ module.exports = {
       },
       backgroundColor: {
         primary: "rgba(var(--primary-bg))",
+        secondary: "rgba(var(--secondary-bg))",
+        highlight: "rgba(var(--highlight-bg))",
       },
       fontFamily: {
         sans: ["var(--font-sans)"],

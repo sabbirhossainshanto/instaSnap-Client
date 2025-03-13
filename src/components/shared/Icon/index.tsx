@@ -219,15 +219,21 @@ export const More = () => {
     </svg>
   );
 };
-export const Settings = () => {
+export const Settings = ({
+  height = "18",
+  width = "18",
+}: {
+  height?: string;
+  width?: string;
+}) => {
   return (
     <svg
       aria-label="Settings"
       fill="currentColor"
-      height="18"
+      height={height}
       role="img"
       viewBox="0 0 24 24"
-      width="18"
+      width={width}
     >
       <title>Settings</title>
       <circle
@@ -367,6 +373,148 @@ export const ThemeIcon = () => {
     >
       <title>Theme icon</title>
       <path d="M11.502,22.99805A11.4313,11.4313,0,0,1,.49512,14.83691a.99889.99889,0,0,1,.251-.998,1.01148,1.01148,0,0,1,.99707-.249,9.43041,9.43041,0,0,0,2.75879.40821A9.5082,9.5082,0,0,0,13.5957,1.74023a1.00039,1.00039,0,0,1,1.24707-1.248A11.501,11.501,0,0,1,11.502,22.99805ZM3.08984,15.91211A9.49991,9.49991,0,0,0,21.002,11.498,9.57875,9.57875,0,0,0,15.916,3.08594,11.5083,11.5083,0,0,1,3.08984,15.91211Z" />
+    </svg>
+  );
+};
+export const Post = () => {
+  return (
+    <svg
+      aria-label=""
+      fill="currentColor"
+      height="12"
+      role="img"
+      viewBox="0 0 24 24"
+      width="12"
+    >
+      <title />
+      <rect
+        fill="none"
+        height="18"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        width="18"
+        x="3"
+        y="3"
+      />
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="9.015"
+        x2="9.015"
+        y1="3"
+        y2="21"
+      />
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="14.985"
+        x2="14.985"
+        y1="3"
+        y2="21"
+      />
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="21"
+        x2="3"
+        y1="9.015"
+        y2="9.015"
+      />
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        x1="21"
+        x2="3"
+        y1="14.985"
+        y2="14.985"
+      />
+    </svg>
+  );
+};
+export const Tagged = () => {
+  return (
+    <svg
+      aria-label=""
+      fill="currentColor"
+      height="12"
+      role="img"
+      viewBox="0 0 24 24"
+      width="12"
+    >
+      <title />
+      <path
+        d="M10.201 3.797 12 1.997l1.799 1.8a1.59 1.59 0 0 0 1.124.465h5.259A1.818 1.818 0 0 1 22 6.08v14.104a1.818 1.818 0 0 1-1.818 1.818H3.818A1.818 1.818 0 0 1 2 20.184V6.08a1.818 1.818 0 0 1 1.818-1.818h5.26a1.59 1.59 0 0 0 1.123-.465Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <path
+        d="M18.598 22.002V21.4a3.949 3.949 0 0 0-3.948-3.949H9.495A3.949 3.949 0 0 0 5.546 21.4v.603"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+      <circle
+        cx="12.072"
+        cy="11.075"
+        fill="none"
+        r="3.556"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+};
+export const Back = () => {
+  return (
+    <svg
+      aria-label="Back"
+      fill="currentColor"
+      height="24"
+      role="img"
+      viewBox="0 0 24 24"
+      width="24"
+    >
+      <title>Back</title>
+      <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z" />
+    </svg>
+  );
+};
+export const CloseFriend = () => {
+  return (
+    <svg
+      aria-label=""
+      fill="currentColor"
+      height="24"
+      role="img"
+      viewBox="0 0 24 24"
+      width="24"
+    >
+      <title />
+      <path
+        d="M12.001.504a11.5 11.5 0 1 0 11.5 11.5 11.513 11.513 0 0 0-11.5-11.5Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Zm4.691-11.82L13.91 9.35l-1.08-2.537a.893.893 0 0 0-1.66 0L10.086 9.35l-2.783.334a.963.963 0 0 0-.493 1.662l2.095 1.905-.606 2.837a.918.918 0 0 0 1.363 1.018l2.335-1.504 2.335 1.504a.918.918 0 0 0 1.363-1.018l-.605-2.837 2.094-1.905a.962.962 0 0 0-.493-1.662Z"
+        fillRule="evenodd"
+      />
     </svg>
   );
 };

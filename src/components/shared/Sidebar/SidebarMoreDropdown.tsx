@@ -6,7 +6,7 @@ import {
   DropdownItem,
   DropdownSection,
 } from "@heroui/react";
-import Link from "next/link";
+
 import { Activity, More, Report, Saved, Settings, ThemeIcon } from "../Icon";
 import { ThemeSwitch } from "../../theme-switch";
 import { logOut } from "@/src/services/auth";
@@ -30,13 +30,10 @@ export default function SidebarMoreDropdown() {
       }}
     >
       <DropdownTrigger>
-        <Link
-          className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors mt-auto"
-          href="/"
-        >
+        <button className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors mt-auto">
           <More />
           <span className="hidden xl:block">More</span>
-        </Link>
+        </button>
       </DropdownTrigger>
       <DropdownMenu variant="light" aria-label="Dropdown menu with description">
         <DropdownSection showDivider>

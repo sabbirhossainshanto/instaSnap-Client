@@ -1,4 +1,4 @@
-import { Input } from "@heroui/react";
+import { Textarea } from "@heroui/react";
 import React from "react";
 import { Controller, FieldValues, Path } from "react-hook-form";
 import { useGenericFormContext } from "../customContext";
@@ -14,7 +14,7 @@ type TTextFieldsProps<T extends FieldValues> = {
   variant?: "flat" | "bordered" | "faded" | "underlined" | undefined;
 };
 
-const TextField = <T extends FieldValues>({
+const TextAreaField = <T extends FieldValues>({
   name,
   label,
   placeholder,
@@ -30,7 +30,7 @@ const TextField = <T extends FieldValues>({
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <Input
+        <Textarea
           variant={variant}
           size={size}
           labelPlacement={labelPlacement}
@@ -48,4 +48,4 @@ const TextField = <T extends FieldValues>({
   );
 };
 
-export default TextField;
+export default TextAreaField;

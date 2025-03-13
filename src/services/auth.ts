@@ -3,7 +3,7 @@
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { AxiosSecure } from "../lib/AxiosSecure/AxiosSecure";
-import { TRegister } from "../types";
+import { TRegister, TUser } from "../types";
 import { TLoginPayload } from "../types/login.type";
 
 export const registerUser = async (payload: TRegister) => {
@@ -38,20 +38,14 @@ export const logOut = async () => {
 export const getCurrentUser = async () => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
-  let decode = null;
+  let decode: TUser | null = null;
   if (accessToken) {
     decode = await jwtDecode(accessToken);
-    return {
-      _id: decode._id,
-      fullName: decode.fullName,
-      userName: decode.userName,
-      email: decode.email,
-      role: decode.role,
-      status: decode.status,
-      isVerified: decode?.isVerified,
-      createdAt: decode?.createdAt,
-      updatedAt: decode?.updatedAt,
-    };
+    if (decode) {
+      return {
+        ...decode,
+      };
+    }
   }
   return decode;
 };

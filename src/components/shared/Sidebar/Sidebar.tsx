@@ -10,14 +10,19 @@ import {
   Search,
 } from "../Icon";
 import SidebarMoreDropdown from "./SidebarMoreDropdown";
-import instaSnap from "../../../assets/img/instaSnap.webp";
-import Image from "next/image";
+import { useUser } from "@/src/providers/user.provider";
+// import instaSnap from "../../../assets/img/instaSnap.webp";
+// import Image from "next/image";
 
 export const Sidebar = () => {
+  const { user } = useUser();
   return (
     <div className="hidden sm:w-[80px] xl:w-[300px] h-screen border-r-[0.5px] border-secondary/25 pt-10 px-4 sm:flex flex-col">
       <div className="hidden xl:block">
-        <Image src={instaSnap} alt="instaSnap" height={150} width={150} />
+        {/* <Image src={instaSnap} alt="instaSnap" height={150} width={150} /> */}
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
       <div className="px-3 xl:hidden">
         <LogoMobile />
@@ -61,7 +66,7 @@ export const Sidebar = () => {
         </Link>
         <Link
           className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
-          href="/"
+          href={`/${user?.userName}`}
         >
           <Create />
           <span className="hidden xl:block">Profile</span>

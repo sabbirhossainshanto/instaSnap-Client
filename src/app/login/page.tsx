@@ -13,8 +13,10 @@ import { useRouter } from "next/navigation";
 import { notification } from "@/src/utils/notification";
 import ISButton from "@/src/lib/ISButton/ISButton";
 import ISDivider from "@/src/lib/ISDivider/ISDivider";
+import { useUser } from "@/src/providers/user.provider";
 
 const Login = () => {
+  const { setUserLoading } = useUser();
   const { mutate: handleLogin, isPending, isSuccess } = useUserLogin();
   const router = useRouter();
 
@@ -22,6 +24,7 @@ const Login = () => {
     handleLogin(data, {
       onSuccess: (data: TResponse<TLoginResponse>) => {
         if (data?.success) {
+          setUserLoading(true);
           notification({ message: data?.message });
           router.push("/");
         } else {

@@ -8,7 +8,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={`flex`}>
       <Sidebar />
-      <div className="w-full flex justify-center pt-5 xl:pt-10">{children}</div>
+      <div className="w-full flex justify-center">{children}</div>
       <div className="visible sm:invisible fixed bottom-0 flex flex-col w-full items-center justify-center bg-primary h-[50px]">
         <div className="flex justify-around w-full">
           <Home />
