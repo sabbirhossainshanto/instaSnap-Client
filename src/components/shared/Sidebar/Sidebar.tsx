@@ -13,6 +13,7 @@ import SidebarMoreDropdown from "./SidebarMoreDropdown";
 import { useUser } from "@/src/providers/user.provider";
 import Image from "next/image";
 import images from "@/src/assets/images";
+import CreatePost from "../../modals/CreatePost/CreatePost";
 // import instaSnap from "../../../assets/img/instaSnap.webp";
 // import Image from "next/image";
 
@@ -59,13 +60,7 @@ export const Sidebar = () => {
           <Notification />
           <span className="hidden xl:block">Notification</span>
         </Link>
-        <Link
-          className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
-          href="/"
-        >
-          <Create />
-          <span className="hidden xl:block">Create</span>
-        </Link>
+        <CreatePost />
         <Link
           className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
           href={`/${user?.userName}`}

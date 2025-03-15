@@ -25,15 +25,16 @@
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 10px !important;
-  color: rgb(71, 71, 71) !important;
+  color: white !important;
   font-weight: bolder !important;
 }
 .swiper-button-prev,
 .swiper-button-next {
   height: 23px !important;
   width: 23px !important;
-  background-color: white !important;
+  background-color: #5e5e5e !important;
   border-radius: 100% !important;
+  z-index: 9999;
 }
 
 .swiper-button-prev.swiper-button-disabled,
