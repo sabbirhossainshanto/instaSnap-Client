@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import profile from "@/src/assets/img/profile.jpg";
 import { useUser } from "@/src/providers/user.provider";
 import { useGetAllUsers } from "@/src/hooks/user.hook";
 import { useFollowUnfollow } from "@/src/hooks/follow.hook";
 import { useEffect, useState } from "react";
 import { TUser } from "@/src/types";
 import Link from "next/link";
+import images from "@/src/assets/images";
 
 const HomeRightSidebar = () => {
   const { mutate: followUnfollow } = useFollowUnfollow();
@@ -44,7 +44,7 @@ const HomeRightSidebar = () => {
               className="rounded-full"
               width={40}
               height={40}
-              src={profile}
+              src={user?.profilePhoto || images.user}
               alt="user"
             />
           </Link>
@@ -82,7 +82,7 @@ const HomeRightSidebar = () => {
                     className="rounded-full"
                     width={40}
                     height={40}
-                    src={profile}
+                    src={people?.profilePhoto || images.user}
                     alt="user"
                   />
                   <div>

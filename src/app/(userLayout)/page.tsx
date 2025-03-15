@@ -4,7 +4,7 @@ import Posts from "@/src/components/modules/Home/Posts";
 
 export default function Home() {
   return (
-    <section className="flex flex-col xl:flex-row gap-10">
+    <section className="flex flex-col xl:flex-row gap-10 pt-5 xl:pt-10">
       <div className="w-full max-w-[600px]  xl:px-10">
         <NewsFeed />
         <Posts />

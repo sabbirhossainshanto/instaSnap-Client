@@ -11,6 +11,8 @@ import {
 } from "../Icon";
 import SidebarMoreDropdown from "./SidebarMoreDropdown";
 import { useUser } from "@/src/providers/user.provider";
+import Image from "next/image";
+import images from "@/src/assets/images";
 // import instaSnap from "../../../assets/img/instaSnap.webp";
 // import Image from "next/image";
 
@@ -68,7 +70,13 @@ export const Sidebar = () => {
           className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
           href={`/${user?.userName}`}
         >
-          <Create />
+          <Image
+            className="rounded-full"
+            width={40}
+            height={40}
+            src={user?.profilePhoto || images.user}
+            alt="user"
+          />
           <span className="hidden xl:block">Profile</span>
         </Link>
 

@@ -10,8 +10,10 @@ export type TUser = {
   updatedAt: string;
   passwordChangedAt: string;
   mobileNumber: string;
-  profilePhoto: string;
-  bio: string;
+  profilePhoto?: string;
+  website?: string;
+  gender?: "male" | "female" | "other";
+  bio?: string;
   followers: {
     createdAt: string;
     updatedAt: string;
