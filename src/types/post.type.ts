@@ -5,6 +5,15 @@ export type TPost = {
   caption: string;
   likes: TUser[];
   media: string[];
+  comments: {
+    _id: string;
+    post: string;
+    commentUser: TUser;
+    text: string;
+    replies: [];
+    createdAt: string;
+    updatedAt: string;
+  }[];
   user: TUser;
   createdAt: string;
   updatedAt: string;

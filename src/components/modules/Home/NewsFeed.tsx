@@ -33,7 +33,7 @@ const NewsFeed = () => {
     }
   };
   return (
-    <div className="max-w-[100vw]  mx-auto px-3 ">
+    <div className="w-full max-w-[600px] mx-auto px-3 bg-secondary/30 sm:bg-transparent py-3 sm:py-0 border-t-[0.5px] border-primary/10 sm:border-t-0 border-b-[0.5px]  sm:border-b-0">
       <Swiper
         slidesPerView="auto"
         navigation={true}

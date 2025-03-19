@@ -3,11 +3,11 @@
 import { TUser } from "@/src/types";
 import Image from "next/image";
 import React, { useState } from "react";
-import profile from "../../../assets/img/profile.jpg";
 import ISButton from "@/src/lib/ISButton/ISButton";
 import { Post, Saved, Settings, Tagged } from "../../shared/Icon";
 import ISDivider from "@/src/lib/ISDivider/ISDivider";
 import Link from "next/link";
+import images from "@/src/assets/images";
 
 const Profile = ({ data }: { data: TUser }) => {
   const [tab, setTab] = useState<"posts" | "saved" | "tagged">("posts");
@@ -18,7 +18,7 @@ const Profile = ({ data }: { data: TUser }) => {
         <div className="flex items-starts gap-10  xl:gap-32">
           <div>
             <Image
-              src={profile}
+              src={data?.profilePhoto || images.user}
               height={150}
               width={150}
               alt="user"

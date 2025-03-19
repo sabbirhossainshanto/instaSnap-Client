@@ -19,3 +19,19 @@ export const getAllPosts = async () => {
     return error.response.data;
   }
 };
+export const getSinglePost = async (id: string) => {
+  try {
+    const { data } = await AxiosSecure.get(`/posts/${id}`);
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};
+export const addLikeToPost = async (payload: { postId: string }) => {
+  try {
+    const { data } = await AxiosSecure.put("/posts/like", payload);
+    return data;
+  } catch (error: any) {
+    return error.response.data;
+  }
+};

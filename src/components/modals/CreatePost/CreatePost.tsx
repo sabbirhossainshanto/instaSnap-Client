@@ -24,7 +24,7 @@ import { TResponse } from "@/src/types";
 import { TLoginResponse } from "@/src/types/login.type";
 import { notification } from "@/src/utils/notification";
 
-export default function CreatePost() {
+export default function CreatePost({ showSearch }: { showSearch: boolean }) {
   const { refetch } = useGetAllPost();
   const { mutate: handleCreatePost } = useCreatePost();
   const [caption, setCaption] = useState("");
@@ -81,7 +81,9 @@ export default function CreatePost() {
         className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
       >
         <Create />
-        <span className="hidden xl:block">Create</span>
+        <span className={`hidden xl:block ${showSearch ? "!hidden" : ""}`}>
+          Create
+        </span>
       </button>
       <Modal
         hideCloseButton

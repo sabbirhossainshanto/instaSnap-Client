@@ -12,7 +12,11 @@ import { ThemeSwitch } from "../../theme-switch";
 import { logOut } from "@/src/services/auth";
 import { useRouter } from "next/navigation";
 
-export default function SidebarMoreDropdown() {
+export default function SidebarMoreDropdown({
+  showSearch,
+}: {
+  showSearch: boolean;
+}) {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -32,7 +36,9 @@ export default function SidebarMoreDropdown() {
       <DropdownTrigger>
         <button className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors mt-auto">
           <More />
-          <span className="hidden xl:block">More</span>
+          <span className={`hidden xl:block ${showSearch ? "!hidden" : ""}`}>
+            More
+          </span>
         </button>
       </DropdownTrigger>
       <DropdownMenu variant="light" aria-label="Dropdown menu with description">
