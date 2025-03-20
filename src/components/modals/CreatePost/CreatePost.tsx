@@ -24,7 +24,11 @@ import { TResponse } from "@/src/types";
 import { TLoginResponse } from "@/src/types/login.type";
 import { notification } from "@/src/utils/notification";
 
-export default function CreatePost({ showSearch }: { showSearch: boolean }) {
+export default function CreatePost({
+  showSearch,
+}: {
+  showSearch: "search" | "notification" | null;
+}) {
   const { refetch } = useGetAllPost();
   const { mutate: handleCreatePost } = useCreatePost();
   const [caption, setCaption] = useState("");

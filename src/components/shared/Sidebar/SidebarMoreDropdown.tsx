@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 export default function SidebarMoreDropdown({
   showSearch,
 }: {
-  showSearch: boolean;
+  showSearch: "search" | "notification" | null;
 }) {
   const router = useRouter();
 

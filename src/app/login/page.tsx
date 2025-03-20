@@ -57,7 +57,7 @@ const Login = () => {
             />
 
             <ISButton
-              isLoading={isPending || isSuccess}
+              isLoading={isPending && !isSuccess}
               className="w-full"
               type="submit"
             >

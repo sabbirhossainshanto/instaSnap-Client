@@ -42,7 +42,6 @@ const Posts = () => {
         onSuccess: (data) => {
           if (data?.success) {
             refetchPosts();
-            notification({ message: data?.message });
           } else {
             notification({ message: data?.message, color: "warning" });
           }
@@ -61,7 +60,6 @@ const Posts = () => {
         if (data?.success) {
           setComment("");
           refetchPosts();
-          notification({ message: data?.message });
         } else {
           notification({ message: data?.message, color: "warning" });
         }
@@ -70,7 +68,7 @@ const Posts = () => {
   };
 
   return (
-    <div className="pt-5  flex flex-col items-center justify-center gap-20 max-w-[500px] mx-auto">
+    <div className="pt-5 xl:pt-10  flex flex-col items-center justify-center gap-20 max-w-[500px] mx-auto">
       {data?.data?.map((post) => {
         const isUserLikedToPost = post?.likes?.find(
           (usr) => usr._id === user?._id
@@ -100,9 +98,7 @@ const Posts = () => {
 
                 <p className="flex items-baseline">
                   <span className="text-start m-0 p-0 mr-1">.</span>{" "}
-                  <span>
-                    {moment(post?.createdAt).startOf("hour").fromNow()}
-                  </span>
+                  <span>{moment(post?.createdAt).fromNow()}</span>
                 </p>
               </div>
               <PostMoreOption post={post} />
