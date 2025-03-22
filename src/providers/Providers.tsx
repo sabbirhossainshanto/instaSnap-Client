@@ -8,6 +8,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ToastProvider } from "@heroui/react";
 import UserProvider from "./user.provider";
+import { Provider } from "react-redux";
+import { store } from "../lib/redux/store";
 
 const queryClient = new QueryClient();
 
@@ -29,12 +31,14 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <UserProvider>
-      <QueryClientProvider client={queryClient}>
-        <HeroUIProvider navigate={router.push}>
-          <ToastProvider placement="top-right" />
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-        </HeroUIProvider>
-      </QueryClientProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <HeroUIProvider navigate={router.push}>
+            <ToastProvider placement="top-right" />
+            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+          </HeroUIProvider>
+        </QueryClientProvider>
+      </Provider>
     </UserProvider>
   );
 }

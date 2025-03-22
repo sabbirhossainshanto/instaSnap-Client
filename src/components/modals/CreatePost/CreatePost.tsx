@@ -23,12 +23,10 @@ import { useCreatePost, useGetAllPost } from "@/src/hooks/post.hook";
 import { TResponse } from "@/src/types";
 import { TLoginResponse } from "@/src/types/login.type";
 import { notification } from "@/src/utils/notification";
+import { useAppSelector } from "@/src/lib/redux/hook";
 
-export default function CreatePost({
-  showSearch,
-}: {
-  showSearch: "search" | "notification" | null;
-}) {
+export default function CreatePost() {
+  const { decreaseSidebarWidth } = useAppSelector((state) => state.global);
   const { refetch } = useGetAllPost();
   const { mutate: handleCreatePost } = useCreatePost();
   const [caption, setCaption] = useState("");
@@ -85,7 +83,9 @@ export default function CreatePost({
         className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors"
       >
         <Create />
-        <span className={`hidden xl:block ${showSearch ? "!hidden" : ""}`}>
+        <span
+          className={`hidden xl:block ${decreaseSidebarWidth ? "!hidden" : ""}`}
+        >
           Create
         </span>
       </button>

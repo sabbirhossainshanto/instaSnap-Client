@@ -10,12 +10,14 @@ import {
   Post,
 } from "@/src/components/shared/Icon";
 import { Sidebar } from "@/src/components/shared/Sidebar/Sidebar";
+import { useAppSelector } from "@/src/lib/redux/hook";
 import { useUser } from "@/src/providers/user.provider";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode, useState } from "react";
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
+  const { decreaseSidebarWidth } = useAppSelector((state) => state.global);
   const { user } = useUser();
   const [showPost, setShowPost] = useState(false);
   return (
@@ -48,7 +50,9 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
       <Sidebar />
-      <div className="sm:ml-[80px] xl:ml-[240px] w-full mb-[150px]">
+      <div
+        className={`sm:ml-[80px] xl:ml-[240px] w-full mb-[150px] ${decreaseSidebarWidth ? "!ml-[80px]" : ""}`}
+      >
         {children}
       </div>
       <div className="visible sm:invisible fixed bottom-0 flex flex-col w-full items-center justify-center bg-primary h-[50px] z-10 border-t-[0.5px] border-secondary/20">

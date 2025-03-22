@@ -11,12 +11,10 @@ import { Activity, More, Report, Saved, Settings, ThemeIcon } from "../Icon";
 import { ThemeSwitch } from "../../theme-switch";
 import { logOut } from "@/src/services/auth";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/src/lib/redux/hook";
 
-export default function SidebarMoreDropdown({
-  showSearch,
-}: {
-  showSearch: "search" | "notification" | null;
-}) {
+export default function SidebarMoreDropdown() {
+  const { decreaseSidebarWidth } = useAppSelector((state) => state.global);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -36,7 +34,9 @@ export default function SidebarMoreDropdown({
       <DropdownTrigger>
         <button className="flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors mt-auto">
           <More />
-          <span className={`hidden xl:block ${showSearch ? "!hidden" : ""}`}>
+          <span
+            className={`hidden xl:block ${decreaseSidebarWidth ? "!hidden" : ""}`}
+          >
             More
           </span>
         </button>

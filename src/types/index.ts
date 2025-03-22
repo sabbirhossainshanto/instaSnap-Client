@@ -13,3 +13,5 @@ export type TResponse<T> = {
   success: string;
   data: T;
 };
+
+export type TDecreaseWidthKeys = "search" | "notification" | "message";

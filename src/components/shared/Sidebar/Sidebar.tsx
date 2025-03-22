@@ -6,20 +6,27 @@ import { useUser } from "@/src/providers/user.provider";
 import Image from "next/image";
 import images from "@/src/assets/images";
 import CreatePost from "../../modals/CreatePost/CreatePost";
-import { useState } from "react";
 import { Divider, Input } from "@heroui/react";
 import ISButton from "@/src/lib/ISButton/ISButton";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/src/lib/redux/hook";
+import { setDecreaseSidebarWidth } from "@/src/lib/redux/features/global/global";
 
 export const Sidebar = () => {
+  const dispatch = useAppDispatch();
+  const { decreaseSidebarWidth } = useAppSelector((state) => state.global);
+  const router = useRouter();
   const { user } = useUser();
-  const [showSearchNotification, setShowSearchNotification] = useState<
-    "search" | "notification" | null
-  >(null);
 
   const navItems = [
     { href: "/", icon: <Home />, label: "Home" },
     { href: "#", icon: <Search />, label: "Search", isButton: true },
-    { href: "/", icon: <Message />, label: "Message" },
+    {
+      href: "/direct/inbox",
+      icon: <Message />,
+      label: "Message",
+      isButton: true,
+    },
     {
       href: "/",
       icon: <Notification />,
@@ -41,11 +48,12 @@ export const Sidebar = () => {
     },
   ];
 
-  const handleShowNotificationOrSearch = (text: "search" | "notification") => {
-    if (text === showSearchNotification) {
-      setShowSearchNotification(null);
+  const handleShowNotificationOrSearch = (item: any) => {
+    if (item?.label?.toLowerCase() === decreaseSidebarWidth) {
+      dispatch(setDecreaseSidebarWidth(null));
     } else {
-      setShowSearchNotification(text);
+      dispatch(setDecreaseSidebarWidth(item?.label?.toLowerCase()));
+      router.push(item?.href);
     }
   };
 
@@ -54,20 +62,24 @@ export const Sidebar = () => {
       {/* Sidebar */}
       <div
         className={`hidden sm:w-[80px] xl:w-[240px] h-screen pt-10 px-4 sm:flex flex-col sm:fixed ${
-          showSearchNotification
+          decreaseSidebarWidth
             ? "!w-[80px]"
             : "border-r-[0.5px] border-secondary/25"
+        } ${
+          decreaseSidebarWidth === "message"
+            ? "border-r-[0.5px] border-secondary/25"
+            : ""
         }`}
       >
         <div
-          className={`hidden xl:block px-3 ${showSearchNotification ? "!hidden" : ""}`}
+          className={`hidden xl:block px-3 ${decreaseSidebarWidth ? "!hidden" : ""}`}
         >
           <Link href="/">
             <Logo />
           </Link>
         </div>
         <div
-          className={`px-3 xl:hidden ${showSearchNotification ? "!flex items-center justify-center" : ""}`}
+          className={`px-3 xl:hidden ${decreaseSidebarWidth ? "!flex items-center justify-center" : ""}`}
         >
           <LogoMobile className={"w-full"} />
         </div>
@@ -78,22 +90,16 @@ export const Sidebar = () => {
               item.isButton ? (
                 <button
                   key={index}
-                  onClick={() =>
-                    handleShowNotificationOrSearch(
-                      item.label?.toLocaleLowerCase() as
-                        | "search"
-                        | "notification"
-                    )
-                  }
+                  onClick={() => handleShowNotificationOrSearch(item)}
                   className={`flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors ${
-                    showSearchNotification === item?.label?.toLocaleLowerCase()
+                    decreaseSidebarWidth === item?.label?.toLocaleLowerCase()
                       ? "justify-center bg-secondary"
                       : ""
                   }`}
                 >
                   {item.icon}
                   <span
-                    className={`hidden xl:block ${showSearchNotification ? "!hidden" : ""}`}
+                    className={`hidden xl:block ${decreaseSidebarWidth ? "!hidden" : ""}`}
                   >
                     {item.label}
                   </span>
@@ -103,12 +109,12 @@ export const Sidebar = () => {
                   key={index}
                   href={item.href}
                   className={`flex items-center gap-4 hover:bg-hover py-3 rounded-md px-3 transition-colors ${
-                    showSearchNotification ? "justify-center" : ""
+                    decreaseSidebarWidth ? "justify-center" : ""
                   }`}
                 >
                   {item.icon}
                   <span
-                    className={`hidden xl:block ${showSearchNotification ? "!hidden" : ""}`}
+                    className={`hidden xl:block ${decreaseSidebarWidth ? "!hidden" : ""}`}
                   >
                     {item.label}
                   </span>
@@ -116,11 +122,11 @@ export const Sidebar = () => {
               )
             )}
 
-            <CreatePost showSearch={showSearchNotification} />
+            <CreatePost />
           </div>
 
           <div className="mt-auto">
-            <SidebarMoreDropdown showSearch={showSearchNotification} />
+            <SidebarMoreDropdown />
           </div>
         </div>
       </div>
@@ -129,7 +135,7 @@ export const Sidebar = () => {
 
       <div
         className={`h-screen border-r-[0.5px] border-secondary/20 rounded-r-3xl shadow-md pt-10 px-4 sm:flex flex-col sm:fixed z-20 left-[80px] bg-primary transition-[width,opacity] duration-300 ease-in-out ${
-          showSearchNotification == "search"
+          decreaseSidebarWidth == "search"
             ? "w-[400px] opacity-100"
             : "w-0 opacity-0 hidden"
         }`}
@@ -156,7 +162,7 @@ export const Sidebar = () => {
       {/* Notification */}
       <div
         className={`h-screen border-r-[0.5px] border-secondary/20 rounded-r-3xl shadow-md pt-10 px-4 sm:flex flex-col sm:fixed z-20 left-[80px] bg-primary transition-[width,opacity] duration-300 ease-in-out ${
-          showSearchNotification == "notification"
+          decreaseSidebarWidth == "notification"
             ? "w-[400px] opacity-100"
             : "w-0 opacity-0 hidden"
         }`}
