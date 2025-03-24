@@ -11,6 +11,7 @@ import { ProfileEdit } from "@/src/schemas";
 import { logOut } from "@/src/services/auth";
 import { TResponse, TUser } from "@/src/types";
 import { notification } from "@/src/utils/notification";
+import { disconnectSocket } from "@/src/utils/socket";
 import { Radio, RadioGroup } from "@heroui/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -58,6 +59,7 @@ const EditProfile = () => {
         if (data?.success) {
           notification({ message: data?.message });
           await logOut();
+          disconnectSocket();
           router.push("/login");
         } else {
           notification({ message: data?.message, color: "warning" });

@@ -12,6 +12,7 @@ import { ThemeSwitch } from "../../theme-switch";
 import { logOut } from "@/src/services/auth";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/src/lib/redux/hook";
+import { disconnectSocket } from "@/src/utils/socket";
 
 export default function SidebarMoreDropdown() {
   const { decreaseSidebarWidth } = useAppSelector((state) => state.global);
@@ -19,6 +20,7 @@ export default function SidebarMoreDropdown() {
 
   const handleLogout = async () => {
     await logOut();
+    disconnectSocket();
     router.push("/login");
   };
   return (

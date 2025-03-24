@@ -2,17 +2,18 @@
 
 import { AxiosSecure } from "../lib/AxiosSecure/AxiosSecure";
 
-export const getAllUsers = async () => {
+export const sendMessage = async (payload: FormData) => {
   try {
-    const { data } = await AxiosSecure.get("/users");
+    const { data } = await AxiosSecure.post(`/messages/send-message`, payload);
     return data;
   } catch (error: any) {
     return error.response.data;
   }
 };
-export const getSingleUser = async (id: string) => {
+
+export const getMessages = async (id: string) => {
   try {
-    const { data } = await AxiosSecure.get(`/users/${id}`);
+    const { data } = await AxiosSecure.get(`/messages/${id}`);
     return data;
   } catch (error: any) {
     return error.response.data;
