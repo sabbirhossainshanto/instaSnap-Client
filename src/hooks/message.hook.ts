@@ -10,7 +10,7 @@ export const useSendMessage = () => {
 };
 export const useGetMessages = (id: string) => {
   return useQuery<any, Error, TResponse<TMessage[]>>({
-    queryKey: ["get-messages"],
+    queryKey: ["get-messages", id],
     enabled: id ? true : false,
     queryFn: async () => await getMessages(id),
   });

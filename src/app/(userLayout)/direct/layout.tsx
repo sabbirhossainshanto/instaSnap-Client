@@ -3,6 +3,7 @@ import images from "@/src/assets/images";
 import { useGetAllUsers } from "@/src/hooks/user.hook";
 import { setDecreaseSidebarWidth } from "@/src/lib/redux/features/global/global";
 import { useAppDispatch } from "@/src/lib/redux/hook";
+import { useSocket } from "@/src/providers/socket.provider";
 import { useUser } from "@/src/providers/user.provider";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +14,8 @@ import { FaRegEdit } from "react-icons/fa";
 const InboxLayout = ({ children }: { children: ReactNode }) => {
   const { data } = useGetAllUsers();
   const { user } = useUser();
+  const { onlineUsers } = useSocket();
+
   const pathname = usePathname();
   const dispatch = useAppDispatch();
 
@@ -21,6 +24,7 @@ const InboxLayout = ({ children }: { children: ReactNode }) => {
       dispatch(setDecreaseSidebarWidth("message"));
     }
   }, []);
+
   return (
     <div className="w-full grid grid-cols-12 h-screen overflow-hidden">
       <div className="col-span-3 border-r-[0.5px] border-secondary/20 h-screen xl:pt-10">
@@ -40,15 +44,21 @@ const InboxLayout = ({ children }: { children: ReactNode }) => {
               <Link
                 href={`/direct/t/${friend?.userName}`}
                 key={friend?._id}
-                className="w-full flex mb-4 gap-4 items-center hover:bg-secondary/30 px-6 py-3"
+                className={`w-full flex mb-4 gap-4 items-center  hover:bg-secondary/30 px-6 py-3 ${pathname?.includes(friend?.userName) ? "bg-secondary/30" : ""}`}
               >
-                <Image
-                  src={friend?.profilePhoto || images.user}
-                  height={50}
-                  width={50}
-                  alt="user"
-                  className="rounded-full"
-                />
+                <div className="relative">
+                  <Image
+                    src={friend?.profilePhoto || images.user}
+                    height={50}
+                    width={50}
+                    alt="user"
+                    className="rounded-full"
+                  />
+                  {onlineUsers?.includes(friend?._id) && (
+                    <span className="bg-green-500 h-3 w-3 rounded-full absolute right-0 bottom-1" />
+                  )}
+                </div>
+
                 <div className="text-start">
                   <p>{friend?.userName}</p>
                   <p className="text-secondary text-sm">sent a photo 1.h</p>

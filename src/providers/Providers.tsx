@@ -10,6 +10,7 @@ import { ToastProvider } from "@heroui/react";
 import UserProvider from "./user.provider";
 import { Provider } from "react-redux";
 import { store } from "../lib/redux/store";
+import { SocketProvider } from "./socket.provider";
 
 const queryClient = new QueryClient();
 
@@ -31,14 +32,18 @@ export function Providers({ children, themeProps }: ProvidersProps) {
 
   return (
     <UserProvider>
-      <Provider store={store}>
-        <QueryClientProvider client={queryClient}>
-          <HeroUIProvider navigate={router.push}>
-            <ToastProvider placement="top-right" />
-            <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
-          </HeroUIProvider>
-        </QueryClientProvider>
-      </Provider>
+      <SocketProvider>
+        <Provider store={store}>
+          <QueryClientProvider client={queryClient}>
+            <HeroUIProvider navigate={router.push}>
+              <ToastProvider placement="top-right" />
+              <NextThemesProvider {...themeProps}>
+                {children}
+              </NextThemesProvider>
+            </HeroUIProvider>
+          </QueryClientProvider>
+        </Provider>
+      </SocketProvider>
     </UserProvider>
   );
 }

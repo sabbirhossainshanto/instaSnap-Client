@@ -10,7 +10,7 @@ export const useGetAllUsers = () => {
 };
 export const useGetSingleUser = (id: string) => {
   return useQuery<any, Error, TResponse<TUser>>({
-    queryKey: ["get-single-users"],
+    queryKey: ["get-single-users", id],
     queryFn: async () => await getSingleUser(id),
   });
 };

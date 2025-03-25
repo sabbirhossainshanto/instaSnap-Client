@@ -4,20 +4,27 @@ import images from "@/src/assets/images";
 import { useGetMessages, useSendMessage } from "@/src/hooks/message.hook";
 import { useGetSingleUser } from "@/src/hooks/user.hook";
 import ISButton from "@/src/lib/ISButton/ISButton";
+import { useSocket } from "@/src/providers/socket.provider";
 import { useUser } from "@/src/providers/user.provider";
+import { TMessage } from "@/src/types";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import Image from "next/image";
 import Link from "next/link";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { IoCallOutline, IoVideocamOutline } from "react-icons/io5";
 import { RiGalleryFill, RiInformation2Line } from "react-icons/ri";
 
 const SingleInbox = ({ userId }: { userId: string }) => {
+  const [messages, setMessages] = useState<TMessage[]>([]);
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
   const { user } = useUser();
+  const { socket } = useSocket();
   const { mutate: sendMessage } = useSendMessage();
   const { data } = useGetSingleUser(userId);
-  const { data: messages, refetch } = useGetMessages(data?.data?._id as string);
+  const { data: messagesData, refetch } = useGetMessages(
+    data?.data?._id as string
+  );
   const [text, setText] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
 
@@ -32,6 +39,7 @@ const SingleInbox = ({ userId }: { userId: string }) => {
       receiverUser: data?.data?._id,
       text,
     };
+    socket?.emit("sendMessage", payload);
     const formData = new FormData();
     formData.append("data", JSON.stringify(payload));
     sendMessage(formData, {
@@ -43,6 +51,26 @@ const SingleInbox = ({ userId }: { userId: string }) => {
       },
     });
   };
+
+  useEffect(() => {
+    if (messagesData?.data && messagesData?.data?.length > 0) {
+      setMessages(messagesData.data);
+
+      socket?.on("newMessage", (message: TMessage) => {
+        setMessages((prev) => [...prev, message]);
+      });
+
+      return () => {
+        socket?.off("newMessage");
+      };
+    }
+  }, [socket, messagesData]);
+
+  useEffect(() => {
+    if (messageEndRef?.current && messages) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div className="h-full w-full flex flex-col">
@@ -103,8 +131,9 @@ const SingleInbox = ({ userId }: { userId: string }) => {
           </div>
         </div>
         <div className="mt-20 w-full">
-          {messages?.data?.map((message) => (
+          {messages?.map((message) => (
             <div
+              ref={messageEndRef}
               key={message?._id}
               className={`w-full flex items-center ${user?._id === message?.senderUser?._id ? "justify-end" : "justify-start"}`}
             >

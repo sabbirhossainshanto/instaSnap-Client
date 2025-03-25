@@ -51,7 +51,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <Sidebar />
       <div
-        className={`sm:ml-[80px] xl:ml-[240px] w-full mb-[150px] ${decreaseSidebarWidth ? "!ml-[80px]" : ""}`}
+        className={`sm:ml-[80px] xl:ml-[240px] w-full mb-[150px] sm:mb-0 ${decreaseSidebarWidth ? "!ml-[80px]" : ""}`}
       >
         {children}
       </div>
